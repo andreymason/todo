@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+      /* What syntax/filenames to allow/disallow */
+      "allowJs": false /* Allow JavaScript files to be a part of your program. Use the checkJS option to get errors from these files. */,
+      "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables allowSyntheticDefaultImports for type compatibility. */,
+      "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+      "isolatedModules": true /* Ensure that each file can be safely transpiled without relying on other imports. */,
+      "jsx": "preserve" /* Specify what JSX code is generated. */,
+      "lib": [
+        "ES2015",
+        "DOM",
+      ] /* Specify a set of bundled library declaration files that describe the target runtime environment. */,
+      "target": "es2016",
+      /* Type Checking Only (parcel does the output, tsc the type checking) */
+      "moduleResolution": "node",
+      "allowUnreachableCode": false /* Disable error reporting for unreachable code. */,
+      "allowUnusedLabels": true /* Disable error reporting for unused labels. */,
+      "exactOptionalPropertyTypes": true /* Interpret optional property types as written, rather than adding 'undefined'. */,
+      "noEmit": true /* Disable emitting files from a compilation. */,
+      "noImplicitAny": true /* Enable error reporting for expressions and declarations with an implied any type.. */,
+      "noImplicitOverride": true /* Ensure overriding members in derived classes are marked with an override modifier. */,
+      "noImplicitReturns": true /* Enable error reporting for codepaths that do not explicitly return in a function. */,
+      "noImplicitThis": true /* Enable error reporting when this is given the type any. */,
+      "noPropertyAccessFromIndexSignature": true /* Enforces using indexed accessors for keys declared using an indexed type */,
+      "noUncheckedIndexedAccess": true /* Include 'undefined' in index signature results */,
+      "noUnusedLocals": true /* Enable error reporting when a local variables aren't read. */,
+      "noUnusedParameters": true /* Raise an error when a function parameter isn't read */,
+      "strict": true /* Enable all strict type-checking options. */,
+      "useUnknownInCatchVariables": true /* Type catch clause variables as 'unknown' instead of 'any'. */
+    },
+    "include": ["src"]
+  }
