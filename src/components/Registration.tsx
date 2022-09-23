@@ -9,9 +9,6 @@ const Registration = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error] = useState("");
-    const auth_data = {
-        username, password
-    };
 
     const usernameOnChange = (event: any) => {
         setUsername(event.target.value);
@@ -28,6 +25,9 @@ const Registration = () => {
     }, [token]);
 
     const onRegister = useCallback( async () => {
+        const authData = {
+            username, password
+        };
 
         const response = await fetch(
             'http://localhost:8000/registration/',
@@ -36,7 +36,7 @@ const Registration = () => {
                     "Content-Type": "application/json"
                 },
                 method: "POST",
-                body: JSON.stringify(auth_data)
+                body: JSON.stringify(authData)
             }
         );
 
@@ -49,7 +49,7 @@ const Registration = () => {
                 setToken(newToken);
         }
 
-    }, []);
+    }, [username, password]);
 
     return (
         <Box sx={{display: "flex", flexDirection: "column"}}>

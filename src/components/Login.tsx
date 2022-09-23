@@ -14,16 +14,12 @@ function Login() {
     useEffect(() => {
         if(token)
             navigate("/tasks");
-    }, [token]);
+    }, [token, navigate]);
 
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-
-    const auth_data = {
-        username, password
-    };
 
     const usernameOnChange = (event: any) => {
         setUsername(event.target.value);
@@ -34,6 +30,9 @@ function Login() {
     }
 
     const onLogin = useCallback( async () => {
+        const authData = {
+            username, password
+        };
 
         const response = await fetch(
             'http://localhost:8000/api-token-auth/',
@@ -42,7 +41,7 @@ function Login() {
                     "Content-Type": "application/json"
                 },
                 method: "POST",
-                body: JSON.stringify(auth_data)
+                body: JSON.stringify(authData)
             }
         );
 
