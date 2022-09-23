@@ -1,21 +1,22 @@
-//import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import Api from '../api';
+import {PayloadAction} from "@reduxjs/toolkit";
+import Login from "../data/Login";
 
-function* fetchAuth(action : any): any {
+function* fetchAuth(action : PayloadAction<Login>): any {
 
     console.log("Start fetchAuth");
 
     try {
 
-       const {usename, password} = action.payload;
+       const {username, password} = action.payload;
 
        const fetchCall = () => fetch(Api.fetchAuth, {
             headers: {
                 "Content-Type": "application/json"
             },
             method: "POST",
-            body: JSON.stringify({usename, password})
+            body: JSON.stringify({username, password})
        });
 
        const authResponse = yield call(fetchCall);
@@ -32,6 +33,8 @@ function* fetchAuth(action : any): any {
  }
 
 
-  export function* authSaga() {
+  function* authSaga() {
     yield takeLatest("auth/login", fetchAuth);
   }
+
+  export default authSaga;

@@ -1,23 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import Login from "../data/Login";
 
 interface AuthState {
-  token: string;
-};
+  username: string | undefined;
+  password: string | undefined;
+  token: string | undefined;
+}
 
 const initialState: AuthState = {
-  token: ""
+  token: undefined,
+  username: undefined,
+  password: undefined,
 };
 
 export const slice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state : AuthState, action: any) => {
-
-        console.log(state);
-
-        console.log(action.payload);
-        
+    login: (state: AuthState, action: PayloadAction<Login>) => {
+        state.username = action.payload.username;
+        state.password = action.payload.password;
     },
 
     setToken: (state : AuthState, action: any) => {
