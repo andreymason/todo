@@ -3,40 +3,35 @@ import React, { useCallback } from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import TextField from '@mui/material/TextField';
-import TaskEditPopupProps from './TaskEditPopupProps';
-import {updateTaskName} from '../reducers/tasks';
-import {useDispatch} from '../store/';
+import {useDispatch, useSelector} from '../store/';
+import {taskEdit, taskEditComplete} from "../reducers/task";
+import {updateTask} from "../reducers/tasks";
 
-function TaskEditPopup(props: TaskEditPopupProps) {
+function TaskEditPopup() {
 
   const dispatch = useDispatch();
 
-  const { onClose, task, open } = props;
+  const { task, isEdit: open } = useSelector(state => state.task);
 
-  const handleClose = () => {
-    onClose(task);
-  };
+  const handleClose = useCallback(() => {
+    dispatch(updateTask(task!));
+    dispatch(taskEditComplete());
+  }, [dispatch, task]);
 
   const onTextChange = useCallback( async (event: any) => {
-
-    //const newTask = { ...task };
     
-    console.log("onTextChange");
-
     const newTaskName = event.target.value;
     
-    dispatch(updateTaskName([task.id, newTaskName]));
+    await dispatch(taskEdit({name: newTaskName}));
 
-  }, []);
+  }, [dispatch]);
 
-  return (
-    <Dialog onClose={handleClose} open={open}>
+  return (task && (<Dialog onClose={handleClose} open={open}>
         <DialogTitle>Set new name</DialogTitle>
 
         <TextField value={task.name} onChange={onTextChange}/>
 
-    </Dialog>
-  );
+    </Dialog>)) || (<></>)
 }
 
 export default TaskEditPopup;

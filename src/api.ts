@@ -4,5 +4,6 @@ const fetchTasks = root + "/tasks";
 
 const fetchAuth = root + "/api-token-auth";
 
-export default { fetchTasks, fetchAuth };
+const api = { fetchTasks, fetchAuth }
 
+export default api;

@@ -18,16 +18,12 @@ function Login() {
     useEffect(() => {
         if(token)
             navigate("/tasks");
-    }, [token]);
+    }, [token, navigate]);
 
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     //const [error, setError] = useState("");
-
-    const auth_data = {
-        username, password
-    };
 
     const usernameOnChange = (event: any) => {
         setUsername(event.target.value);
@@ -38,8 +34,9 @@ function Login() {
     }
 
     const onLogin = useCallback( async () => {
-
-        dispatch(login(auth_data));
+        const authData = {
+            username, password
+        };
 
         // const response = await fetch(
         //     'http://localhost:8000/api-token-auth/',
@@ -51,6 +48,16 @@ function Login() {
         //         body: JSON.stringify(auth_data)
         //     }
         // );
+        const response = await fetch(
+            'http://localhost:8000/api-token-auth/',
+            {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                method: "POST",
+                body: JSON.stringify(authData)
+            }
+        );
 
         // if(response.status >= 400) {
         //     const body = response.body;

@@ -11,63 +11,32 @@ import Paper from '@mui/material/Paper';
 
 //import transformTask from '../transformers/Tasks';
 import TaskActions from './TaskActions';
-import { fetchTasks } from '../reducers/tasks';
+import { setTasks } from '../reducers/tasks';
 import {useSelector, useDispatch} from '../store';
+import Task from "../data/Task";
+import TaskEditPopup from "./TaskEditPopup";
 
 function TasksList() {
 
     const dispatch = useDispatch();
-    const tasks = useSelector((state) => state.tasks);
+    const tasks = useSelector((state) => state.tasks.tasks);
 
     //const token = localStorage.getItem('token');
 
     useEffect( () => {
+        const tasks = [...Array(500).keys()].map((key) => {
+            return {id: key, name: `Task${key}`, listId: 1, listName: "task1"} as Task
+        })
 
-        // const fetchData = async () => {
+        dispatch(setTasks(tasks));
 
-        //     console.log("Fetch data");
-
-        //     const response = await fetch(
-
-        //         'http://localhost:8000/tasks/',
-
-        //         {
-
-        //             headers: {
-
-        //                 "Content-Type" : "application/json",
-        //                 "Authorization" : `Token ${token}`
-
-        //             }
-
-        //         }
-        //     );
-    
-        //     if(response.status < 400) {
-        //         const json = await response.json();
-
-        //         const transformedTasks = json.map(transformTask);
-
-        //         if(json)
-        //             dispatch(setTasks(transformedTasks));
-
-        //     }
-        //     else 
-        //         console.log(response.body);
-
-        // }
-
-        //fetchData();
-
-        dispatch(fetchTasks());
-
-    }, []);
-    
-    console.log("Render tasks list");
+    }, [dispatch]);
 
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <>
+            <TaskEditPopup/>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         <TableCell>Task Name</TableCell>
@@ -77,8 +46,8 @@ function TasksList() {
                 </TableHead>
                 <TableBody>
                     {
-                    
-                    tasks.tasks.map((task) => (
+
+                        tasks.map((task) => (
 
                         <TableRow
                         key={task.id}
@@ -98,6 +67,7 @@ function TasksList() {
                 </TableBody>
             </Table>
         </TableContainer>
+        </>
     );
 }
 
