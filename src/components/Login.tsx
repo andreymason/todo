@@ -1,15 +1,19 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import { TextField, Box, Typography, Button, Alert } from '@mui/material';
+import { TextField, Box, Typography, Button } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 
+import { useDispatch } from '../store/';
+import { login } from '../reducers/auth';
 
 
 function Login() {
 
+    const dispatch = useDispatch();
+
     let navigate = useNavigate();
 
 
-    const [token, setToken] = useState(localStorage.getItem("token"));
+    const [token] = useState(localStorage.getItem("token"));
 
     useEffect(() => {
         if(token)
@@ -19,7 +23,7 @@ function Login() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    //const [error, setError] = useState("");
 
     const auth_data = {
         username, password
@@ -35,35 +39,37 @@ function Login() {
 
     const onLogin = useCallback( async () => {
 
-        const response = await fetch(
-            'http://localhost:8000/api-token-auth/',
-            {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify(auth_data)
-            }
-        );
+        dispatch(login(auth_data));
 
-        if(response.status >= 400) {
-            const body = response.body;
+        // const response = await fetch(
+        //     'http://localhost:8000/api-token-auth/',
+        //     {
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         },
+        //         method: "POST",
+        //         body: JSON.stringify(auth_data)
+        //     }
+        // );
 
-            if(body)
-                setError(body.toString());
-        }
-        else {
-            const json = await response.json();
+        // if(response.status >= 400) {
+        //     const body = response.body;
 
-            const token = json.token;
+        //     if(body)
+        //         setError(body.toString());
+        // }
+        // else {
+        //     const json = await response.json();
 
-            if(token) {
-                localStorage.setItem('token', token);
-                setToken(token);
-            }
-        }
+        //     const token = json.token;
 
-    }, [setToken, username, password]);
+        //     if(token) {
+        //         localStorage.setItem('token', token);
+        //         setToken(token);
+        //     }
+        // }
+
+    }, [password, username]);
 
     return (
         <Box sx={{display: "flex", flexDirection: "column"}}>
@@ -74,7 +80,7 @@ function Login() {
 
             <TextField label="username" onChange={usernameOnChange} variant="outlined" />
             <TextField label="password" type="password" onChange={passwordOnChange} variant="outlined" />
-            {error&&<Alert severity="error">This is an error alert — check it out!</Alert>}
+            
             <Button variant="outlined" onClick={onLogin}>Login</Button>
             
         </Box>

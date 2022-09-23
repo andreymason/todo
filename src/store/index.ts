@@ -8,10 +8,12 @@ import {
   import type { ThunkAction } from 'redux-thunk';
   import { configureStore } from '@reduxjs/toolkit';
   import type { Action } from '@reduxjs/toolkit';
-  import { rootReducer } from './rootReducer';
-  import tasksSaga from '../sagas/tasks';
 
-  const sagaMiddleware = createSagaMiddleware()
+
+  import { rootReducer } from './rootReducer';
+  import { rootSaga } from '../sagas/';
+
+  const sagaMiddleware = createSagaMiddleware();
   
   export const store = configureStore({
     reducer: rootReducer,
@@ -19,7 +21,7 @@ import {
   }, 
   );
 
-  sagaMiddleware.run(tasksSaga);
+  sagaMiddleware.run(rootSaga);
   
   export type RootState = ReturnType<typeof store.getState>;
   

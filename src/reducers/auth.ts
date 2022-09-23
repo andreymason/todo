@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface AuthState {
   token: string;
-}
+};
 
 const initialState: AuthState = {
   token: ""
@@ -14,9 +14,18 @@ export const slice = createSlice({
   reducers: {
     login: (state : AuthState, action: any) => {
 
-        state.token = action.payload;
+        console.log(state);
+
+        console.log(action.payload);
         
+    },
+
+    setToken: (state : AuthState, action: any) => {
+
+        state.token = action.payload;
+
     }
+
   }
 });
 

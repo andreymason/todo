@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 
 //import transformTask from '../transformers/Tasks';
 import TaskActions from './TaskActions';
-import { fetchTasks} from '../reducers/tasks';
+import { fetchTasks } from '../reducers/tasks';
 import {useSelector, useDispatch} from '../store';
 
 function TasksList() {
