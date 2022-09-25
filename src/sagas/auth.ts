@@ -1,8 +1,9 @@
-//import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import Api from '../api';
+import {PayloadAction} from "@reduxjs/toolkit";
+import Login from "../data/Login";
 
-function* fetchAuth(action : any): any {
+function* fetchAuth(action : PayloadAction<Login>): any {
 
     console.log("Start fetchAuth");
 
@@ -37,9 +38,8 @@ function* fetchAuth(action : any): any {
  }
 
 
-  export function* authSaga() {
-
-    console.log("Console.log authSAGA");
-
+  function* authSaga() {
     yield takeLatest("auth/login", fetchAuth);
   }
+
+  export default authSaga;

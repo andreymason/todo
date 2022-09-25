@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import Login from "../data/Login";
 
 interface AuthState {
   token: string|null;
@@ -6,18 +7,14 @@ interface AuthState {
 
 const initialState: AuthState = {
   token: localStorage.getItem("token"),
-};
+}
 
 export const slice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state : AuthState, action: any) => {
-
-        console.log(state);
-
-        console.log(action.payload);
-        
+    login: (state: AuthState, action: PayloadAction<Login>) => {
+        console.log(state, action);
     },
 
     setToken: (state : AuthState, action: any) => {
