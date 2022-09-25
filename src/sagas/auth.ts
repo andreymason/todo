@@ -8,23 +8,28 @@ function* fetchAuth(action : any): any {
 
     try {
 
-       const {usename, password} = action.payload;
+       const {username, password} = action.payload;
+
+       console.log(username + " " + password);
 
        const fetchCall = () => fetch(Api.fetchAuth, {
             headers: {
                 "Content-Type": "application/json"
             },
             method: "POST",
-            body: JSON.stringify({usename, password})
+            body: JSON.stringify({username, password})
        });
 
        const authResponse = yield call(fetchCall);
 
        const json = yield call(() => new Promise( res => res(authResponse.json())));
 
-       console.log(authResponse);
+       //console.log(authResponse);
        
-       yield put({type: "auth/setToken", token: json});
+       yield put({type: "auth/setToken", token: json.token});
+
+       console.log(json.token);
+       
 
     } catch (e) {
        console.log(e);
@@ -33,5 +38,8 @@ function* fetchAuth(action : any): any {
 
 
   export function* authSaga() {
+
+    console.log("Console.log authSAGA");
+
     yield takeLatest("auth/login", fetchAuth);
   }

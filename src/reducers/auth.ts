@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface AuthState {
-  token: string;
+  token: string|null;
 };
 
 const initialState: AuthState = {
-  token: ""
+  token: localStorage.getItem("token"),
 };
 
 export const slice = createSlice({
@@ -22,7 +22,11 @@ export const slice = createSlice({
 
     setToken: (state : AuthState, action: any) => {
 
-        state.token = action.payload;
+        state.token = action.token;
+
+        //console.log(action.token + " - token in setToken");
+      
+        localStorage.setItem("token", action.token);
 
     }
 
@@ -31,6 +35,6 @@ export const slice = createSlice({
 
 export const { reducer } = slice;
 
-export const { login } = slice.actions;
+export const { login, setToken } = slice.actions;
 
 export default slice.reducer;

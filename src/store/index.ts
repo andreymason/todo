@@ -2,7 +2,6 @@ import {
     useDispatch as useReduxDispatch,
     useSelector as useReduxSelector
   } from 'react-redux';
-  //import { applyMiddleware } from 'redux';
   import createSagaMiddleware from 'redux-saga';
   import type { TypedUseSelectorHook } from 'react-redux';
   import type { ThunkAction } from 'redux-thunk';
@@ -17,9 +16,10 @@ import {
   
   export const store = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
-  }, 
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({thunk: false}).concat(sagaMiddleware),
+  }
   );
+
 
   sagaMiddleware.run(rootSaga);
   

@@ -2,7 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 import { TextField, Box, Typography, Button } from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 
-import { useDispatch } from '../store/';
+import { useDispatch, useSelector } from '../store';
 import { login } from '../reducers/auth';
 
 
@@ -12,8 +12,8 @@ function Login() {
 
     let navigate = useNavigate();
 
+    const token = useSelector(state => state.auth.token);
 
-    const [token] = useState(localStorage.getItem("token"));
 
     useEffect(() => {
         if(token)
@@ -38,6 +38,8 @@ function Login() {
             username, password
         };
 
+        dispatch(login(authData));
+
         // const response = await fetch(
         //     'http://localhost:8000/api-token-auth/',
         //     {
@@ -48,16 +50,16 @@ function Login() {
         //         body: JSON.stringify(auth_data)
         //     }
         // );
-        const response = await fetch(
-            'http://localhost:8000/api-token-auth/',
-            {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify(authData)
-            }
-        );
+        // const response = await fetch(
+        //     'http://localhost:8000/api-token-auth/',
+        //     {
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         },
+        //         method: "POST",
+        //         body: JSON.stringify(authData)
+        //     }
+        // );
 
         // if(response.status >= 400) {
         //     const body = response.body;
@@ -76,7 +78,7 @@ function Login() {
         //     }
         // }
 
-    }, [password, username]);
+    }, [token, password, username]);
 
     return (
         <Box sx={{display: "flex", flexDirection: "column"}}>
